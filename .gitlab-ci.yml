@@ -8,7 +8,7 @@ job 1:
   script: echo " job one success"
 
 
-gcp:
+gcp 1:4:
   stage: test
   script: echo "job gcp success"
 
@@ -16,7 +16,7 @@ aws:
   stage: test
   script: echo "job aws success"
 
-gcp 1:
+gcp 2:4:
   stage: test
   script: echo "job aws success"
 
@@ -24,7 +24,7 @@ aws 1:
   stage: test
   script: echo "job aws success"
 
-gcp 2:
+gcp 3:4:
   stage: test
   script: echo "job aws success"
  
