@@ -16,6 +16,17 @@ aws:
   stage: test
   script: echo "job aws success"
 
+gcp vpc:
+  stage: test
+  script: echo "job aws success"
+aws vpc:
+  stage: test
+  script: echo "job aws success"
+gcp cluster:
+  stage: test
+  script: echo "job aws success"
+ 
+
 job 2:
   stage: deploy
   script: echo " job four success"
