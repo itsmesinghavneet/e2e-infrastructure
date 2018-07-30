@@ -16,13 +16,15 @@ aws:
   stage: test
   script: echo "job aws success"
 
-gcp vpc:
+gcp 1:
   stage: test
   script: echo "job aws success"
-aws vpc:
+
+aws 1:
   stage: test
   script: echo "job aws success"
-gcp cluster:
+
+gcp 2:
   stage: test
   script: echo "job aws success"
  
