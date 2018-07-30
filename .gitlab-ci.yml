@@ -1,0 +1,23 @@
+stages:
+  - build
+  - test
+  - deploy
+
+job 1:
+  before_script:
+    - wget https://storage.googleapis.com/kubernetes-release/release/v1.11.0/bin/linux/amd64/kubectl /usr/local/bin/kubectl
+    - wget https://github.com/kubernetes/kops/releases/download/1.9.1/kops-linux-amd64 /usr/local/bin/kops
+  stage: build
+  script: make build dependencies
+
+job 2:
+  stage: build
+  script: make build artifacts
+
+job 3:
+  stage: test
+  script: make test
+
+job 4:
+  stage: deploy
+  script: make deploy
