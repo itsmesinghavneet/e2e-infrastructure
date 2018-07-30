@@ -5,7 +5,7 @@ stages:
 
 job 1:
   stage: build
-  script: echo " job one success"
+  script: set + x   && echo " job one success" > binaries/test.txt 
   artifacts:
     paths:
       - binaries/
