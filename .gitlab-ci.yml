@@ -12,7 +12,7 @@ gcp 1:4:
   stage: test
   script: echo "job gcp success"
 
-aws:
+aws 2:2:
   stage: test
   script: echo "job aws success"
 
@@ -20,7 +20,7 @@ gcp 2:4:
   stage: test
   script: echo "job aws success"
 
-aws 1:
+aws 1:2:
   stage: test
   script: echo "job aws success"
 
