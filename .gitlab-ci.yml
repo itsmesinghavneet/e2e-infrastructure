@@ -4,9 +4,17 @@ stages:
   - deploy
 
 job 1:
-  before_script:
-    - wget https://storage.googleapis.com/kubernetes-release/release/v1.11.0/bin/linux/amd64/kubectl /usr/local/bin/kubectl
-    - wget https://github.com/kubernetes/kops/releases/download/1.9.1/kops-linux-amd64 /usr/local/bin/kops
   stage: build
-  script: echo "success"
+  script: echo " job one success"
 
+job 2:
+  stage: build
+  script: echo"job two success"
+
+job 3:
+  stage: test
+  script: echo "job three success"
+
+job 4:
+  stage: deploy
+  script: echo"job four success"
