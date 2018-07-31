@@ -13,7 +13,7 @@ job 1:
       - binaries/
 
 gcp 1:3:
-  image: atulabhi/kop:v1
+  image: atulabhi/kops:v1
   stage: test
   script: 
     - echo "job gcp success"
