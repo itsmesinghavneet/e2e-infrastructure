@@ -17,7 +17,8 @@ gcp 1:3:
   stage: test
   script: 
     - echo "job gcp success"
-    - kops -version
+    - kops version
+    - ansible --version
   dependencies:
     - job 1
 
