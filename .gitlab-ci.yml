@@ -38,6 +38,8 @@ gcp 1:3:
 aws 2:2:
   stage: test
   script: 
+  - curl --header "JOB-TOKEN: $CI_JOB_TOKEN" "https://gitlab.com/itsmesingh.avneet/e2e-infrastructure/-/jobs/85646826/artifacts/download"
+  - unzip artifacts.zip
     - echo "job aws success"
     - ls -a
   dependencies:
