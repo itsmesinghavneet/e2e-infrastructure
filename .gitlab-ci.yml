@@ -23,7 +23,7 @@ job 1:
     - echo " job one success" > test.txt 
   artifacts:
     paths:
-      - [.gitlab-ci.yml]
+      - /binary
 
 gcp 1:3:
   image: atulabhi/kops:v1
@@ -37,7 +37,9 @@ gcp 1:3:
 
 aws 2:2:
   stage: test
-  script: echo "job aws success"
+  script: 
+    - echo "job aws success"
+    - ls -a
   dependencies:
     - bootstrap
 
