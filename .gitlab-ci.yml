@@ -1,7 +1,6 @@
 stages:
   - build
-  - gcp
-  - aws
+  - test
   - deploy
 
 
@@ -41,13 +40,17 @@ job 2:
   script: echo " job four success"
 
 .job_template: &job_definition  # Hidden key that defines an anchor named 'job_definition'
-  image: atulabhi/kops:v1
-   script:
+  image: ruby:2.1
+  services:
+    - postgres
+    - redis
 
 test1:
   <<: *job_definition           # Merge the contents of the 'job_definition' alias
+  script:
     - echo "test1 project"
 
 test2:
   <<: *job_definition           # Merge the contents of the 'job_definition' alias
+  script:
     - echo "test2 project"
