@@ -5,6 +5,7 @@ stages:
   - deploy
 
 bootstrap:
+  image: atulabhi/kops:v1
   stage: bootstrap
   script:
     - wget https://raw.githubusercontent.com/itsmesinghavneet/e2e-infrastructure/test/test/.gitlab-ci.yml
