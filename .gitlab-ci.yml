@@ -7,9 +7,8 @@ stages:
 bootstrap:
   stage: bootstrap
   script:
-    - generate-gitlab-ci.yml
+    - wget https://raw.githubusercontent.com/itsmesinghavneet/e2e-infrastructure/test/test/.gitlab-ci.yml
   artifacts:
-    type: gitlab-ci-yml
     paths: [.gitlab-ci.yml]
 
 job 1:
