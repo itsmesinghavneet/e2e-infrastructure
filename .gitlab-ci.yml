@@ -1,7 +1,16 @@
 stages:
   - build
+  - bootstrap
   - test
   - deploy
+
+bootstrap:
+  stage: bootstrap
+  script:
+    - generate-gitlab-ci.yml
+  artifacts:
+    type: gitlab-ci-yml
+    paths: [.gitlab-ci.yml]
 
 job 1:
   stage: build
