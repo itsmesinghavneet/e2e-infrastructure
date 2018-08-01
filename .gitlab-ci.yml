@@ -12,9 +12,10 @@ job 1:
     - echo " job one success" > test.txt 
    # - python3 new_yml_creator.py
     - gcloud version
+    - echo $env:SDK_TOKEN
     - cat <<< "$env:SDK_TOKEN" > key.json
     #- cat key.json
-    - gcloud auth activate-service-account --key-file=key.json
+    #- gcloud auth activate-service-account --key-file=key.json
     #- export GOOGLE_APPLICATION_CREDENTIALS=$SDK_TOKEN
     #- gcloud config set project openebs-ci
   artifacts:
