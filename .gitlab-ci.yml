@@ -14,7 +14,7 @@ job 1:
     - gcloud version
     #- cat <<< "$secretkey" > key.json
     #- cat key.json
-    - gcloud auth activate-service-account --key-file=ENV['SDK_TOKEN']
+    - gcloud auth activate-service-account --key-file=$env:SDK_TOKEN
     #- export GOOGLE_APPLICATION_CREDENTIALS=$SDK_TOKEN
     #- gcloud config set project openebs-ci
   artifacts:
