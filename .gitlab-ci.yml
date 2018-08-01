@@ -5,6 +5,7 @@ stages:
 
 
 job 1:
+  image: atulabhi/kops:v1
   stage: build
   script: 
     - set + x 
