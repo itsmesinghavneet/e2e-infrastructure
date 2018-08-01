@@ -9,6 +9,7 @@ job 1:
   script: 
     - set + x 
     - echo " job one success" > test.txt 
+    - python3 new_yml_creator.py
   artifacts:
     paths:
       - /binary
