@@ -5,8 +5,6 @@ stages:
 
 
 job 1:
-  variables: 
-    $SDK_TOKEN
   image: atulabhi/kops:v2
   stage: build
   script: 
@@ -16,9 +14,9 @@ job 1:
     - gcloud version
     #- cat <<< "$secretkey" > key.json
     #- cat key.json
-    - gcloud auth activate-service-account --key-file=$SDK_TOKEN
-    - export GOOGLE_APPLICATION_CREDENTIALS=$SDK_TOKEN
-    - gcloud config set project openebs-ci
+    - gcloud auth activate-service-account --key-file=ENV['SDK_TOKEN']
+    #- export GOOGLE_APPLICATION_CREDENTIALS=$SDK_TOKEN
+    #- gcloud config set project openebs-ci
   artifacts:
     paths:
       - /binary
