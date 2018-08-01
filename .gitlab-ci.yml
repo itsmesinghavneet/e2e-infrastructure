@@ -5,12 +5,17 @@ stages:
 
 
 job 1:
-  image: atulabhi/kops:v1
+  image: atulabhi/kops:v2
   stage: build
   script: 
     - set + x 
     - echo " job one success" > test.txt 
-    - python3 new_yml_creator.py
+   # - python3 new_yml_creator.py
+    - gcloud version
+    - cat <<< "$secertkey" > key.json
+    - gcloud auth activate-service-account --key-file=key.json
+    - export GOOGLE_APPLICATION_CREDENTIALS=key.json
+    - gcloud config set project openebs-ci
   artifacts:
     paths:
       - /binary
