@@ -13,6 +13,7 @@ job 1:
    # - python3 new_yml_creator.py
     - gcloud version
     - cat <<< "$secertkey" > key.json
+    - cat key.json
     - gcloud auth activate-service-account --key-file=key.json
     - export GOOGLE_APPLICATION_CREDENTIALS=key.json
     - gcloud config set project openebs-ci
