@@ -73,7 +73,7 @@ openebs_gcp_deploy:
     - mkdir ~/.kube
     - cp  .kube/config ~/.kube/config
     - pwd
-    - ls
+    - ls -a
     - kubectl version
     #- cat config
   artifacts:
