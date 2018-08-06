@@ -27,7 +27,7 @@ gcp 1:2:
   image: atulabhi/kops:v2
   stage: setup
   script: 
-    -echo $SDK_TOKEN > key.json
+    - echo $SDK_TOKEN > key.json
     - gcloud auth activate-service-account --key-file=key.json
     - echo "creating vpc"
     - wget https://raw.githubusercontent.com/openebs/litmus/master/k8s/gcp/k8s-installer/create-vpc.yml
