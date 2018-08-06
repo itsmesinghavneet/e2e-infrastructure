@@ -31,7 +31,7 @@ gcp 1:2:
     - gcloud auth activate-service-account --key-file=key.json
     - echo "creating vpc"
     - wget https://raw.githubusercontent.com/openebs/litmus/master/k8s/gcp/k8s-installer/create-vpc.yml
-    - ansible create-vpc.yml --extra-vars "project=openebs-ci vpc_name=openebs-e2e-test" 
+    - ansible-playbook create-vpc.yml --extra-vars "project=openebs-ci vpc_name=openebs-e2e-test" 
 gcp 2:2:
   image: atulabhi/kops:v1
   stage: setup
