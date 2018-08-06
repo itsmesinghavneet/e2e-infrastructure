@@ -57,7 +57,7 @@ gcp-cluster:
     - cat ~/.kube/config
   artifacts:
     paths:
-      - ~/.kube/config
+      - ~/.kube/
 
 openebs_gcp_deploy:
   image: atulabhi/kops:v3
