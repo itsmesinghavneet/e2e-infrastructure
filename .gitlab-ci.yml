@@ -51,7 +51,7 @@ gcp-cluster:
     paths:
       - /.kube/config
 
-openebs_deploy_gcp:
+openebs_gcp_deploy:
   image: atulabhi/kops:v2
   stage: test
   script:
@@ -74,7 +74,7 @@ aws:
   stage: setup
   script: echo " job four success"
 
-openebs_deploy_aws:
+openebs_aws_deploy:
   stage: test
   script: echo "job aws success"
 
