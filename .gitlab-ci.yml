@@ -33,6 +33,9 @@ gcp 1:2:
     - echo "creating vpc"
     - wget https://raw.githubusercontent.com/openebs/litmus/master/k8s/gcp/k8s-installer/create-vpc.yml
     - ansible-playbook create-vpc.yml --extra-vars "project=openebs-ci vpc_name=openebs-e2e-test" 
+  artifacts:
+    paths:
+      - /binary
 gcp 2:2:
   image: atulabhi/kops:v2
   stage: setup
@@ -47,6 +50,8 @@ gcp 2:2:
   artifacts:
     paths:
       - /.kube/config
+  dependencies:
+    - gcp 1:2
 
 openebs_deploy:
   image: atulabhi/kops:v2
