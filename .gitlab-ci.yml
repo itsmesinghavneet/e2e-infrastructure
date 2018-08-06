@@ -48,7 +48,7 @@ gcp-cluster:
     - gcloud auth activate-service-account --key-file=key.json
     - git clone https://github.com/openebs/litmus.git 
     - cd litmus/k8s/gcp/k8s-installer/
-    - export GOOGLE_APPLICATION_CREDENTIALS=key.json && ansible-playbook create-k8s-cluster.yml -vv --extra-vars "project=openebs-ci nodes=3 vpc_name=openebs-e2e-test"
+    - export GOOGLE_APPLICATION_CREDENTIALS="key.json" && ansible-playbook create-k8s-cluster.yml -vv --extra-vars "project=openebs-ci nodes=3 vpc_name=openebs-e2e-test"
     - echo $GOOGLE_APPLICATION_CREDENTIALS
   artifacts:
     paths:
