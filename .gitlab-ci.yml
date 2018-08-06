@@ -54,16 +54,20 @@ gcp-cluster:
     - ansible-playbook create-k8s-cluster.yml -vv --extra-vars "project=openebs-ci nodes=3 vpc_name=openebs-e2e-test k8s_version=1.10.6"
     - echo $GOOGLE_APPLICATION_CREDENTIALS
     - gcloud auth list
-    - cat ~/.kube/config
+    - pwd
+    - cat ~/.kube/config > /itsmesingh.avneet/e2e-infrastructure/.kube/config
   artifacts:
     paths:
-      - ~/.kube/
+      - .kube/
 
 openebs_gcp_deploy:
   image: atulabhi/kops:v3
   stage: test
+  dependencies:
+    - gcp-cluster
   script:
     - echo "Deploying Openebs"
+    - cp  .kube/config ~/kube/config
     - pwd
     - ls
     - kubectl version
