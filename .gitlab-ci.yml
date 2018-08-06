@@ -53,6 +53,7 @@ openebs_deploy:
   stage: test
   script:
     - echo "Deploying Openebs"
+    - cat .kube/config
   dependencies:
     - gcp 2:2
   artifacts:
