@@ -44,10 +44,11 @@ gcp-cluster:
     - echo $SDK_TOKEN > key.json
     - ls
     - cat key.json
+    - pwd
     - ls
     - gcloud auth activate-service-account --key-file=key.json
     - gcloud config set project openebs-ci
-    - export GOOGLE_APPLICATION_CREDENTIALS="key.json"
+    - export GOOGLE_APPLICATION_CREDENTIALS="~/key.json"
     - git clone https://github.com/openebs/litmus.git 
     - cd litmus/k8s/gcp/k8s-installer/
     - ansible-playbook create-k8s-cluster.yml -vv --extra-vars "project=openebs-ci nodes=3 vpc_name=openebs-e2e-test k8s_version=1.10.6"
