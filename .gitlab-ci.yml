@@ -21,9 +21,9 @@ job 1:
     #- gcloud config set project openebs-ci
   artifacts:
     paths:
-      - /binary
+      - binary/
 
-gcp 1:2:
+gcp-vpc:
   image: atulabhi/kops:v2
   stage: setup
   script: 
@@ -35,8 +35,8 @@ gcp 1:2:
     - ansible-playbook create-vpc.yml --extra-vars "project=openebs-ci vpc_name=openebs-e2e-test" 
   artifacts:
     paths:
-      - /binary
-gcp 2:2:
+      - /test
+gcp-cluster:
   image: atulabhi/kops:v2
   stage: setup
   script: 
@@ -50,17 +50,13 @@ gcp 2:2:
   artifacts:
     paths:
       - /.kube/config
-  dependencies:
-    - gcp 1:2
 
-openebs_deploy:
+openebs_deploy_gcp:
   image: atulabhi/kops:v2
   stage: test
   script:
     - echo "Deploying Openebs"
     - cat .kube/config
-  dependencies:
-    - gcp 2:2
   artifacts:
     paths:
       - /.kube/config
@@ -78,10 +74,11 @@ aws:
   stage: setup
   script: echo " job four success"
 
-openebs_deploy:
+openebs_deploy_aws:
   stage: test
   script: echo "job aws success"
 
 apps-deploy:
   stage: app-test
   script: echo "job aws success"
+ 
