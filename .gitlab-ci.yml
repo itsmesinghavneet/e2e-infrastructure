@@ -37,7 +37,7 @@ gcp-vpc:
     paths:
       - /test
 gcp-cluster:
-  image: atulabhi/kops:v3
+  image: atulabhi/kops:v4
   stage: setup
   script: 
     - echo "creating cluster"
