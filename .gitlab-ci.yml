@@ -37,7 +37,7 @@ gcp-vpc:
     paths:
       - /test
 gcp-cluster:
-  image: atulabhi/kops:v2
+  image: atulabhi/kops:v3
   stage: setup
   script: 
     - echo "creating cluster"
@@ -59,12 +59,13 @@ gcp-cluster:
       - /.kube/config
 
 openebs_gcp_deploy:
-  image: atulabhi/kops:v2
+  image: atulabhi/kops:v3
   stage: test
   script:
     - echo "Deploying Openebs"
     - pwd
     - ls
+    - kubectl version
     #- cat config
   artifacts:
     paths:
