@@ -55,6 +55,7 @@ gcp-cluster:
     - echo $GOOGLE_APPLICATION_CREDENTIALS
     - gcloud auth list
     - pwd
+    - mkdir /itsmesingh.avneet/e2e-infrastructure/.kube
     - cat ~/.kube/config > /itsmesingh.avneet/e2e-infrastructure/.kube/config
   artifacts:
     paths:
