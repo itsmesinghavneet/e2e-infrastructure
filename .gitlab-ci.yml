@@ -40,7 +40,7 @@ gcp-cluster:
   image: atulabhi/kops:v3
   stage: setup
   script: 
-    - sudo -H pip install kubernetes
+    - pip install kubernetes
     - pip list
     - echo "creating cluster"
     - echo $SDK_TOKEN > key.json
