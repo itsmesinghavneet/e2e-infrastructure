@@ -29,14 +29,18 @@ gcp 1:2:
   script: 
     - echo $SDK_TOKEN > key.json
     - gcloud auth activate-service-account --key-file=key.json
+    - export GOOGLE_APPLICATION_CREDENTIALS=key.json
     - echo "creating vpc"
     - wget https://raw.githubusercontent.com/openebs/litmus/master/k8s/gcp/k8s-installer/create-vpc.yml
     - ansible-playbook create-vpc.yml --extra-vars "project=openebs-ci vpc_name=openebs-e2e-test" 
 gcp 2:2:
-  image: atulabhi/kops:v1
+  image: atulabhi/kops:v2
   stage: setup
   script: 
     - echo "creating cluster"
+    - echo $SDK_TOKEN > key.json
+    - gcloud auth activate-service-account --key-file=key.json
+    - export GOOGLE_APPLICATION_CREDENTIALS=key.json
     - git clone https://github.com/openebs/litmus.git 
     - cd litmus/k8s/gcp/k8s-installer/
     - ansible-playbook create-k8s-cluster.yml -vv --extra-vars "project=openebs-ci nodes=3 vpc_name=openebs-e2e-test"
