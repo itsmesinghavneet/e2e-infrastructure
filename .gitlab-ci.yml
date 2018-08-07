@@ -1,52 +1,14 @@
 stages:
-  #- before-setup
   - setup
   - test
   - app-test
   - cleanup
 
-
-job 1:
-  image: atulabhi/kops:v2
-  stage: setup
-  script: 
-    - set + x 
-    - echo " job one success" > test.txt 
-   # - python3 new_yml_creator.py
-    - gcloud version
-    - echo $SDK_TOKEN
-    - echo $SDK_TOKEN > key.json
-    - cat key.json
-    - gcloud auth activate-service-account --key-file=key.json
-    #- export GOOGLE_APPLICATION_CREDENTIALS=$SDK_TOKEN
-    #- gcloud config set project openebs-ci
-  artifacts:
-    paths:
-      - binary/
-
-gcp-vpc:
-  image: atulabhi/kops:v2
-  stage: setup
-  script: 
-    - echo $SDK_TOKEN > key.json
-    - gcloud auth activate-service-account --key-file=key.json
-    - export GOOGLE_APPLICATION_CREDENTIALS=key.json
-    - echo "creating vpc"
-    - wget https://raw.githubusercontent.com/openebs/litmus/master/k8s/gcp/k8s-installer/create-vpc.yml
-    - ansible-playbook create-vpc.yml --extra-vars "project=openebs-ci vpc_name=openebs-e2e-test" 
-  artifacts:
-    paths:
-      - /text
 gcp-cluster:
   image: atulabhi/kops:v5
   stage: setup
   script: 
-    - echo "creating cluster"
     - echo $SDK_TOKEN > key.json
-    - ls
-    - cat key.json
-    - pwd
-    - ls
     - gcloud auth activate-service-account --key-file=key.json
     - gcloud config set project openebs-ci
     - export GOOGLE_APPLICATION_CREDENTIALS="/itsmesingh.avneet/e2e-infrastructure/key.json"
@@ -54,10 +16,10 @@ gcp-cluster:
     - cd litmus/
     - git checkout gcp-k8s
     - cd k8s/gcp/k8s-installer/
+    - echo "creating vpc"
+    - ansible-playbook create-vpc.yml --extra-vars "project=openebs-ci vpc_name=openebs-e2e-test"
+    - echo "creating cluster"
     - ansible-playbook create-k8s-cluster.yml -vv --extra-vars "project=openebs-ci nodes=3 vpc_name=openebs-e2e-test k8s_version=1.10.6"
-    - echo $GOOGLE_APPLICATION_CREDENTIALS
-    - gcloud auth list
-    - pwd
     - mkdir /itsmesingh.avneet/e2e-infrastructure/.kube
     - cat ~/.kube/config > /itsmesingh.avneet/e2e-infrastructure/.kube/config
   artifacts:
@@ -80,7 +42,7 @@ openebs_gcp_deploy:
     paths:
       - .kube/
 
-apps-deploy:
+apps-gcp-deploy:
   stage: app-test
   script:
    - echo"Deploying apps"
@@ -89,7 +51,7 @@ apps-deploy:
     - openebs_deploy
      
 
-aws-prerequisite:
+aws-cluster:
   image: atulabhi/kops:v5
   stage: setup
   script: 
@@ -100,35 +62,23 @@ aws-prerequisite:
    - mkdir aws
    - git clone https://github.com/chandankumar4/test.git
    - cd test/k8s/aws/k8s-installer
+   - echo "creating vpc"
    - ansible-playbook pre-requisite.yml
+   - echo "creating cluster"
+   - ansible-playbook create-aws-cluster.yml --extra-vars "k8s_version=1.10.0"
    - cp -r /tmp/aws/  /itsmesingh.avneet/e2e-infrastructure/aws/
+   - cat ~/.kube/config > /itsmesingh.avneet/e2e-infrastructure/.kube/config
+   - cd /itsmesingh.avneet/e2e-infrastructure
+   - mv .kube/config/ aws/
   artifacts:
     paths:
       - aws/
-      
-aws-cluster:
-  image: atulabhi/kops:v5
-  stage: setup
-  script:
-   - echo "creating AWS cluster"
-   - mkdir ~/.aws
-   - echo  $CONFIG > ~/.aws/config
-   - echo $CREDENTIALS > ~/.aws/credentials
-   - ls
-   - cp -r aws/ /tmp/aws/
-   - git clone https://github.com/chandankumar4/test.git
-   #- cd test/k8s/aws/k8s-installer
-   - ansible-playbook create-aws-cluster.yml --extra-vars "k8s_version=1.10.0"
-   - cat ~/.kube/config > /itsmesingh.avneet/e2e-infrastructure/.kube/config
-  artifacts:
-    paths:
-      - .kube/
 
 openebs_aws_deploy:
   stage: test
   script: echo "job aws success"
 
-apps-deploy:
+apps-aws-deploy:
   stage: app-test
   script: echo "job aws success"
  
