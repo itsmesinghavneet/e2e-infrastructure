@@ -129,6 +129,7 @@ openebs_aws_deploy:
   stage: test
   script: echo "job aws success"
 
-apps-aws-deploy:
+apps-deploy:
   stage: app-test
   script: echo "job aws success"
+ 
