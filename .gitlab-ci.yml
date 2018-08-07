@@ -1,5 +1,5 @@
 stages:
-  - before-setup
+  #- before-setup
   - setup
   - test
   - app-test
@@ -91,7 +91,7 @@ apps-deploy:
 
 aws-prerequisite:
   image: atulabhi/kops:v5
-  stage: before-setup
+  stage: setup
   script: 
    - echo "creating AWS vpc"
    - mkdir ~/.aws
@@ -109,13 +109,12 @@ aws-prerequisite:
 aws-cluster:
   image: atulabhi/kops:v5
   stage: setup
-  dependencies:
-    - aws-prerequisite
   script:
    - echo "creating AWS cluster"
    - mkdir ~/.aws
    - cp $CONFIG ~/.aws/config
    - cp $CREDENTIALS ~/.aws/credentials
+   - ls
    - cp -r tmp/aws/ /tmp/aws/
    - git clone https://github.com/chandankumar4/test.git
    - cd test/k8s/aws/k8s-installer
