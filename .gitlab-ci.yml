@@ -95,8 +95,8 @@ aws-prerequisite:
   script: 
    - echo "creating AWS vpc"
    - mkdir ~/.aws
-   - cp $CONFIG ~/.aws/config
-   - cp $CREDENTIALS ~/.aws/credentials
+   - echo $CONFIG ~/.aws/config
+   - echo $CREDENTIALS ~/.aws/credentials
    - mkdir aws
    - git clone https://github.com/chandankumar4/test.git
    - cd test/k8s/aws/k8s-installer
