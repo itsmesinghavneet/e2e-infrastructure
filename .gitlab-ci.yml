@@ -37,7 +37,7 @@ gcp-vpc:
     paths:
       - /test
 gcp-cluster:
-  image: atulabhi/kops:v4
+  image: atulabhi/kops:v5
   stage: setup
   script: 
     - echo "creating cluster"
@@ -64,7 +64,7 @@ gcp-cluster:
       - .kube/
 
 openebs_gcp_deploy:
-  image: atulabhi/kops:v3
+  image: atulabhi/kops:v5
   stage: test
   dependencies:
     - gcp-cluster
@@ -74,14 +74,10 @@ openebs_gcp_deploy:
     - pwd
     - mkdir ~/.kube
     - cp  .kube/config ~/.kube/config
-    - pwd
-    - ls -a
     - kubectl config get-contexts
-    - kubectl 	
-    #- cat config
   artifacts:
     paths:
-      - /.kube/config
+      - .kube/
 
 apps-deploy:
   stage: app-test
@@ -92,9 +88,39 @@ apps-deploy:
     - openebs_deploy
      
 
-aws:
+aws-prerequisite:
+  image: atulabhi/kops:v5
   stage: setup
-  script: echo " job four success"
+  script: 
+   - echo "creating AWS vpc"
+   - mkdir ~/.aws
+   - cp $CONFIG ~/.aws/config
+   - cp $CREDENTIALS ~/.aws/credentials
+   - git clone https://github.com/chandankumar4/test.git
+   - cd test/k8s/aws/k8s-installer
+   - ansible-playbook pre-requisite.yml
+   - cp -r /tmp/aws/  /itsmesingh.avneet/e2e-infrastructure/tmp/aws/
+  artifacts:
+    paths:
+      - tmp/aws/
+aws-cluster:
+  image: atulabhi/kops:v5
+  stage: setup
+  dependencies:
+    - aws-prerequisite
+  script:
+   - echo "creating AWS cluster"
+   - mkdir ~/.aws
+   - cp $CONFIG ~/.aws/config
+   - cp $CREDENTIALS ~/.aws/credentials
+   - cp -r tmp/aws/ /tmp/aws/
+   - git clone https://github.com/chandankumar4/test.git
+   - cd test/k8s/aws/k8s-installer
+   - ansible-playbook create-aws-cluster.yml --extra-vars "k8s_version=1.10.0"
+   - cat ~/.kube/config > /itsmesingh.avneet/e2e-infrastructure/.kube/config
+  artifacts:
+    paths:
+      - .kube/
 
 openebs_aws_deploy:
   stage: test
