@@ -52,10 +52,10 @@ apps-gcp-deploy:
      
 
 aws-cluster:
-  image: atulabhi/kops:v5
+  image: atulabhi/kops:v6
   stage: setup
   script: 
-   - echo "creating AWS vpc"
+   - echo "creating AWS-vpc"
    - mkdir ~/.aws
    - echo $CONFIG ~/.aws/config
    - echo $CREDENTIALS ~/.aws/credentials
