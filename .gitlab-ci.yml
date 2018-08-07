@@ -57,8 +57,8 @@ aws-cluster:
   script: 
    - echo "creating AWS-vpc"
    - mkdir ~/.aws
-   - echo $CONFIG ~/.aws/config
-   - echo $CREDENTIALS ~/.aws/credentials
+   - echo $CONFIG > ~/.aws/config
+   - echo $CREDENTIALS > ~/.aws/credentials
    - mkdir aws 
    - mkdir cluster && cd cluster
    - git clone https://github.com/chandankumar4/test.git
