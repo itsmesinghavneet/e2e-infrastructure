@@ -1,4 +1,5 @@
 stages:
+  - before-setup
   - setup
   - test
   - app-test
@@ -79,7 +80,7 @@ openebs_gcp_deploy:
     paths:
       - .kube/
 
-apps-deploy:
+apps-gcp-deploy:
   stage: app-test
   script:
    - echo"Deploying apps"
@@ -90,19 +91,21 @@ apps-deploy:
 
 aws-prerequisite:
   image: atulabhi/kops:v5
-  stage: setup
+  stage: before-setup
   script: 
    - echo "creating AWS vpc"
    - mkdir ~/.aws
    - cp $CONFIG ~/.aws/config
    - cp $CREDENTIALS ~/.aws/credentials
+   - mkdir aws
    - git clone https://github.com/chandankumar4/test.git
    - cd test/k8s/aws/k8s-installer
    - ansible-playbook pre-requisite.yml
-   - cp -r /tmp/aws/  /itsmesingh.avneet/e2e-infrastructure/tmp/aws/
+   - cp -r /tmp/aws/  /itsmesingh.avneet/e2e-infrastructure/aws/
   artifacts:
     paths:
-      - tmp/aws/
+      - aws/
+      
 aws-cluster:
   image: atulabhi/kops:v5
   stage: setup
@@ -126,7 +129,6 @@ openebs_aws_deploy:
   stage: test
   script: echo "job aws success"
 
-apps-deploy:
+apps-aws-deploy:
   stage: app-test
   script: echo "job aws success"
- 
