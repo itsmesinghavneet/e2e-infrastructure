@@ -112,8 +112,8 @@ aws-cluster:
   script:
    - echo "creating AWS cluster"
    - mkdir ~/.aws
-   - cp $CONFIG ~/.aws/config
-   - cp $CREDENTIALS ~/.aws/credentials
+   - echo  $CONFIG > ~/.aws/config
+   - echo $CREDENTIALS > ~/.aws/credentials
    - ls
    - cp -r tmp/aws/ /tmp/aws/
    - git clone https://github.com/chandankumar4/test.git
