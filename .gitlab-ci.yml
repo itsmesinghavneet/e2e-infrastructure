@@ -48,7 +48,7 @@ apps-gcp-deploy:
    - echo"Deploying apps"
    
   dependencies:
-    - openebs_deploy
+    - openebs_gcp_deploy
      
 
 aws-cluster:
