@@ -115,7 +115,7 @@ aws-cluster:
    - echo  $CONFIG > ~/.aws/config
    - echo $CREDENTIALS > ~/.aws/credentials
    - ls
-   - cp -r tmp/aws/ /tmp/aws/
+   - cp -r aws/ /tmp/aws/
    - git clone https://github.com/chandankumar4/test.git
    - cd test/k8s/aws/k8s-installer
    - ansible-playbook create-aws-cluster.yml --extra-vars "k8s_version=1.10.0"
