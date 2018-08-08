@@ -3,7 +3,6 @@ stages:
   - test
   - app-test
   - cleanup
-
 #gcp-cluster:
 #  image: atulabhi/kops:v5
 #  stage: setup
@@ -73,20 +72,30 @@ aws-cluster:
    - ansible-playbook pre-requisite.yml -vvv
    - echo "creating  cluster"
    - ansible-playbook create-aws-cluster.yml --extra-vars "k8s_version=1.10.0" -vvv
+   - wget https://raw.githubusercontent.com/openebs/litmus/master/hack/rbac.yaml
+   - kubectl apply -f rbac.yaml
    - cp -r /tmp/aws/  /itsmesingh.avneet/e2e-infrastructure/aws/
    - mkdir /itsmesingh.avneet/e2e-infrastructure/.kube
    - cat ~/.kube/config > /itsmesingh.avneet/e2e-infrastructure/.kube/config
+   - kubectl create configmap kubeconfig --from-file=/itsmesingh.avneet/e2e-infrastructure/.kube/config -n litmus
    - cd /itsmesingh.avneet/e2e-infrastructure
    - mv .kube/config aws/
+
   artifacts:
     paths:
       - aws/
 
 openebs_aws_deploy:
   stage: test
-  script: echo "job aws success"
+  dependencies:
+    - aws-cluster
+  script: 
+   - echo "deploying OpenEBS on AWS"
+   - wget https://raw.githubusercontent.com/ashishranjan738/testlit/master/setup_openebs.yaml
+   - kubectl apply -f setup_openebs.yaml
 
 apps-aws-deploy:
   stage: app-test
-  script: echo "job aws success"
+  script: 
+   - echo "job aws success"
  
