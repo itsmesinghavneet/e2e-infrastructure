@@ -61,6 +61,10 @@ aws-cluster:
    - echo $CREDENTIALS > ~/.aws/credentials
    - mkdir aws 
    - mkdir cluster && cd cluster
+   - export AWS_ACCESS_KEY_ID=$AC_ID
+   - export AWS_SECRET_ACCESS_KEY=$AC_KEY
+   - export REGION=eu-west-2
+   - export OUTPUT=json
    - git clone https://github.com/chandankumar4/test.git
    - cd test/k8s/aws/k8s-installer
    - echo "creating vpc"
