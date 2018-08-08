@@ -68,7 +68,7 @@ aws-cluster:
    - whoami
    - git clone https://github.com/chandankumar4/test.git
    - cd test/k8s/aws/k8s-installer
-   - echo "creating-vpc"
+   - echo "creating vpc"
    - pip list
    - ansible-playbook pre-requisite.yml -vvv
    - echo "creating cluster"
