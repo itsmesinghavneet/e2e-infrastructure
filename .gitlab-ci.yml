@@ -68,9 +68,9 @@ aws-cluster:
    - git clone https://github.com/chandankumar4/test.git
    - cd test/k8s/aws/k8s-installer
    - echo "creating vpc"
-   - ansible-playbook pre-requisite.yml
+   - ansible-playbook pre-requisite.yml -vvv
    - echo "creating cluster"
-   - ansible-playbook create-aws-cluster.yml --extra-vars "k8s_version=1.10.0"
+   - ansible-playbook create-aws-cluster.yml --extra-vars "k8s_version=1.10.0" -vvv
    - cp -r /tmp/aws/  /itsmesingh.avneet/e2e-infrastructure/aws/
    - cat ~/.kube/config > /itsmesingh.avneet/e2e-infrastructure/.kube/config
    - cd /itsmesingh.avneet/e2e-infrastructure
