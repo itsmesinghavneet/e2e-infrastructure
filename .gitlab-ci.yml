@@ -1,6 +1,5 @@
 stages:
-  - gcp-setup
-  - aws-setup
+  - setup
   - gcp-test
   - aws-test
   - gcp-app-test
