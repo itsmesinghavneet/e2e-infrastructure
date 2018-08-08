@@ -5,7 +5,7 @@ stages:
   - cleanup
 
 gcp-cluster:
-  image: harshvkarn/kops:v1
+  image: atulabhi/kops:v5
   stage: setup
   script: 
     - echo $SDK_TOKEN > key.json
@@ -27,7 +27,7 @@ gcp-cluster:
       - .kube/
 
 openebs_gcp_deploy:
-  image: harshvkarn/kops:v1
+  image: atulabhi/kops:v5
   stage: test
   dependencies:
     - gcp-cluster
@@ -52,7 +52,7 @@ apps-gcp-deploy:
      
 
 aws-cluster:
-  image: harshvkarn/kops:v1
+  image: atulabhi/kops:v6
   stage: setup
   script: 
    - echo "creating AWS-vpc"
