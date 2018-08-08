@@ -65,6 +65,7 @@ aws-cluster:
    - export AWS_SECRET_ACCESS_KEY=$AC_KEY
    - export AWS_DEFAULT_REGION=eu-west-2
    - export AWS_DEFAULT_OUTPUT=json
+   - whoami
    - git clone https://github.com/chandankumar4/test.git
    - cd test/k8s/aws/k8s-installer
    - echo "creating-vpc"
