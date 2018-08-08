@@ -71,9 +71,10 @@ aws-cluster:
    - echo "creating vpc"
    - pip list
    - ansible-playbook pre-requisite.yml -vvv
-   - echo "creating-cluster"
+   - echo "creating  cluster"
    - ansible-playbook create-aws-cluster.yml --extra-vars "k8s_version=1.10.0" -vvv
    - cp -r /tmp/aws/  /itsmesingh.avneet/e2e-infrastructure/aws/
+   - mkdir /itsmesingh.avneet/e2e-infrastructure/.kube
    - cat ~/.kube/config > /itsmesingh.avneet/e2e-infrastructure/.kube/config
    - cd /itsmesingh.avneet/e2e-infrastructure
    - mv .kube/config/ aws/
