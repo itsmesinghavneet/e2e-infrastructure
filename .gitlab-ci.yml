@@ -52,7 +52,7 @@ apps-gcp-deploy:
      
 
 aws-cluster:
-  image: atulabhi/kops:v6
+  image: atulabhi/kops:v7
   stage: setup
   script: 
    - echo "creating AWS-vpc"
