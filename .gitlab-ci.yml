@@ -77,7 +77,7 @@ aws-cluster:
    - mkdir /itsmesingh.avneet/e2e-infrastructure/.kube
    - cat ~/.kube/config > /itsmesingh.avneet/e2e-infrastructure/.kube/config
    - cd /itsmesingh.avneet/e2e-infrastructure
-   - mv .kube/config/ aws/
+   - mv .kube/config aws/
   artifacts:
     paths:
       - aws/
