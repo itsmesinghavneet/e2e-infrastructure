@@ -1,11 +1,15 @@
 stages:
-  - setup
-  - test
-  - app-test
-  - cleanup
+  - gcp-setup
+  - aws-setup
+  - gcp-test
+  - aws-test
+  - gcp-app-test
+  - aws-app-test
+  - gcp-cleanup
+  - aws-cleanup
 gcp-cluster:
   image: atulabhi/kops:v5
-  stage: setup
+  stage: gcp-setup
   script: 
     - echo $SDK_TOKEN > key.json
     - gcloud auth activate-service-account --key-file=key.json
@@ -16,21 +20,21 @@ gcp-cluster:
     - git checkout gcp-k8s
     - cd k8s/gcp/k8s-installer/
     - echo "creating vpc"
-    - ansible-playbook create-vpc.yml --extra-vars "project=openebs-ci vpc_name=openebs-e2e-test"
+   # - ansible-playbook create-vpc.yml --extra-vars "project=openebs-ci vpc_name=openebs-e2e-test"
     - echo "creating cluster"
-    - ansible-playbook create-k8s-cluster.yml -vv --extra-vars "project=openebs-ci nodes=3 vpc_name=openebs-e2e-test k8s_version=1.10.6"
+    #- ansible-playbook create-k8s-cluster.yml -vv --extra-vars "project=openebs-ci nodes=3 vpc_name=openebs-e2e-test k8s_version=1.10.6"
     - mkdir /itsmesingh.avneet/e2e-infrastructure/.kube
     - cat ~/.kube/config > /itsmesingh.avneet/e2e-infrastructure/.kube/config
-    - wget https://raw.githubusercontent.com/openebs/litmus/master/hack/rbac.yaml
-    - kubectl apply -f rbac.yaml
-    - kubectl create configmap kubeconfig --from-file=/itsmesingh.avneet/e2e-infrastructure/.kube/config -n litmus 
+   # - wget https://raw.githubusercontent.com/openebs/litmus/master/hack/rbac.yaml
+    #- kubectl apply -f rbac.yaml
+    #- kubectl create configmap kubeconfig --from-file=/itsmesingh.avneet/e2e-infrastructure/.kube/config -n litmus 
   artifacts:
     paths:
       - .kube/
 
 openebs_gcp_deploy:
   image: atulabhi/kops:v5
-  stage: test
+  stage: gcp-test
   dependencies:
     - gcp-cluster
   script:
@@ -45,7 +49,7 @@ openebs_gcp_deploy:
       - .kube/
 
 apps-gcp-deploy:
-  stage: app-test
+  stage: gcp-app-test
   script:
    - echo"Deploying apps"
   
@@ -55,7 +59,7 @@ apps-gcp-deploy:
 
 aws-cluster:
   image: atulabhi/kops:v8
-  stage: setup
+  stage: aws-setup
   script: 
    - echo "creating AWS-vpc"
    - mkdir ~/.aws
@@ -72,16 +76,16 @@ aws-cluster:
    - cd test/k8s/aws/k8s-installer
    - echo "creating vpc"
    - pip list
-   - ansible-playbook pre-requisite.yml -vvv
+   #- ansible-playbook pre-requisite.yml -vvv
    - echo "creating  cluster"
-   - ansible-playbook create-aws-cluster.yml --extra-vars "k8s_version=1.10.0" -vvv
+   #- ansible-playbook create-aws-cluster.yml --extra-vars "k8s_version=1.10.0" -vvv
    - wget https://raw.githubusercontent.com/openebs/litmus/master/hack/rbac.yaml
    - kubectl apply -f rbac.yaml
    - cp -r /tmp/aws/  /itsmesingh.avneet/e2e-infrastructure/aws/
    - mkdir /itsmesingh.avneet/e2e-infrastructure/.kube
-   - cat ~/.kube/config > /itsmesingh.avneet/e2e-infrastructure/.kube/config
-   - kubectl create configmap kubeconfig --from-file=/itsmesingh.avneet/e2e-infrastructure/.kube/config -n litmus
-   - cd /itsmesingh.avneet/e2e-infrastructure
+   #- cat ~/.kube/config > /itsmesingh.avneet/e2e-infrastructure/.kube/config
+  # - kubectl create configmap kubeconfig --from-file=/itsmesingh.avneet/e2e-infrastructure/.kube/config -n litmus
+   #- cd /itsmesingh.avneet/e2e-infrastructure
    - mv .kube/config aws/
 
   artifacts:
@@ -89,7 +93,8 @@ aws-cluster:
       - aws/
 
 openebs_aws_deploy:
-  stage: test
+  image: atulabhi/kops:v8
+  stage: aws-test
   dependencies:
     - aws-cluster
   script: 
@@ -98,7 +103,7 @@ openebs_aws_deploy:
    - kubectl apply -f setup_openebs.yaml
 
 apps-aws-deploy:
-  stage: app-test
+  image: atulabhi/kops:v8
+  stage: aws-app-test
   script: 
    - echo "job aws success"
- 
