@@ -5,7 +5,7 @@ stages:
   - cleanup
 
 gcp-cluster:
-  image: atulabhi/kops:v5
+  image: harshvkarn/kops:v1
   stage: setup
   script: 
     - echo $SDK_TOKEN > key.json
@@ -27,7 +27,7 @@ gcp-cluster:
       - .kube/
 
 openebs_gcp_deploy:
-  image: atulabhi/kops:v5
+  image: harshvkarn/kops:v1
   stage: test
   dependencies:
     - gcp-cluster
@@ -52,7 +52,7 @@ apps-gcp-deploy:
      
 
 aws-cluster:
-  image: atulabhi/kops:v6
+  image: harshvkarn/kops:v1
   stage: setup
   script: 
    - echo "creating AWS-vpc"
@@ -63,8 +63,8 @@ aws-cluster:
    - mkdir cluster && cd cluster
    - export AWS_ACCESS_KEY_ID=$AC_ID
    - export AWS_SECRET_ACCESS_KEY=$AC_KEY
-   - export REGION=eu-west-2
-   - export OUTPUT=json
+   - export AWS_DEFAULT_REGION=eu-west-2
+   - export AWS_DEFAULT_OUTPUT=json
    - git clone https://github.com/chandankumar4/test.git
    - cd test/k8s/aws/k8s-installer
    - echo "creating vpc"
