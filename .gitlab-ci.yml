@@ -8,7 +8,7 @@ stages:
   - aws-cleanup
 gcp-cluster:
   image: atulabhi/kops:v5
-  stage: gcp-setup
+  stage: setup
   script: 
     - echo $SDK_TOKEN > key.json
     - gcloud auth activate-service-account --key-file=key.json
@@ -58,7 +58,7 @@ apps-gcp-deploy:
 
 aws-cluster:
   image: atulabhi/kops:v8
-  stage: aws-setup
+  stage: setup
   script: 
    - echo "creating AWS-vpc"
    - mkdir ~/.aws
