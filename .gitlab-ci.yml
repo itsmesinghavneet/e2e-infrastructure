@@ -113,9 +113,10 @@ openebs_aws_deploy:
   script: 
    - echo "deploying OpenEBS on AWS"
    - ls -a
+   - ls -a aws
    - pwd
    - mkdir ~/.kube
-   - cp  aws/.kube/config ~/.kube/config
+   - cp  aws/config ~/.kube/config
    - wget https://raw.githubusercontent.com/ashishranjan738/testlit/master/setup_openebs.yaml
    - kubectl apply -f setup_openebs.yaml
 
