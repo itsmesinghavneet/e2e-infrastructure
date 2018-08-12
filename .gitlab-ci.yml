@@ -112,6 +112,10 @@ openebs_aws_deploy:
     - aws-cluster
   script: 
    - echo "deploying OpenEBS on AWS"
+   - ls -a
+   - pwd
+   - mkdir ~/.kube
+   - cp  aws/.kube/config ~/.kube/config
    - wget https://raw.githubusercontent.com/ashishranjan738/testlit/master/setup_openebs.yaml
    - kubectl apply -f setup_openebs.yaml
 
