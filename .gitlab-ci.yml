@@ -112,7 +112,7 @@ aws-cluster:
    - ansible-playbook create-aws-cluster.yml --extra-vars "k8s_version=1.10.0" -vvv
    - wget https://raw.githubusercontent.com/openebs/litmus/master/hack/rbac.yaml
    - kubectl apply -f rbac.yaml
-   - cat /tmp/aws/cluster_name.csv /itsmesingh.avneet/e2e-infrastructure/aws/cluster/cluster_name.csv
+   - cat /tmp/aws/cluster_name.csv >/itsmesingh.avneet/e2e-infrastructure/aws/cluster/cluster_name.csv
    - cat /tmp/aws/id.csv /itsmesingh.avneet/e2e-infrastructure/aws/cluste/id.csv
    - mkdir /itsmesingh.avneet/e2e-infrastructure/.kube
    - cat ~/.kube/config > /itsmesingh.avneet/e2e-infrastructure/.kube/config
