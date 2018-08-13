@@ -61,14 +61,16 @@ cleanup-gcp:
     - gcp-cluster
   stage: cleanup
   script: 
-   - echo "job aws success"
+   - echo "cleanup"
+   - pwd
+   - cp -r .kube ~/logs/clusters
    - git clone https://github.com/harshvkarn/litmus.git 
    - cd litmus/
    - git checkout gcp-k8s
    - cd k8s/gcp/k8s-installer/
    - echo "cleanup"
    - ansible-playbook delete-k8s-cluster.yml
-   - ansible-playbook delete-vpc.yml --extra-vars "vpc_name=openebs-e2e"
+   - ansible-playbook delete-vpc.yml --extra-vars "vpc_name=openebs-e2e-test"
 
 aws-cluster:
   image: atulabhi/kops:v8
@@ -132,6 +134,12 @@ cleanup-aws:
     - aws-cluster
   stage: cleanup
   script: 
-   - echo "job aws success"
-   - cp -r /aws/tmp /tmp/aws
-   - echo /tmp/aws
+   - echo "cleanup"
+   - pwd
+   - export AWS_ACCESS_KEY_ID=$AC_ID
+   - export AWS_SECRET_ACCESS_KEY=$AC_KEY
+   - export AWS_DEFAULT_REGION=eu-west-2
+   - export AWS_DEFAULT_OUTPUT=json
+   - cp -r aws/tmp ~/tmp/aws
+   - ansible-playbook delete-aws-cluster.yml
+   - ansible-playbook delete-pre-requisite.yml
