@@ -151,7 +151,7 @@ cleanup-aws:
     - aws-cluster
   stage: cleanup
   script: 
-   - echo "AWS-cleanup"
+   - echo "AWS-Cleanup"
    - pwd
    - ls aws/
    - export AWS_ACCESS_KEY_ID=$AC_ID
