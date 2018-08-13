@@ -62,8 +62,11 @@ cleanup-gcp:
   stage: cleanup
   script: 
    - echo "cleanup"
-   - pwd
-   - cp -r .kube ~/logs/clusters
+   - pwd 
+   - ls -a
+   - mkdir ~/logs
+   - mkdir ~/logs/clusters
+   - cp -r .kube/logs/clusters ~/logs/clusters
    - git clone https://github.com/harshvkarn/litmus.git 
    - cd litmus/
    - git checkout gcp-k8s
@@ -136,10 +139,12 @@ cleanup-aws:
   script: 
    - echo "cleanup"
    - pwd
+   - ls 
    - export AWS_ACCESS_KEY_ID=$AC_ID
    - export AWS_SECRET_ACCESS_KEY=$AC_KEY
    - export AWS_DEFAULT_REGION=eu-west-2
    - export AWS_DEFAULT_OUTPUT=json
-   - cp -r aws/tmp ~/tmp/aws
+   - mkdir /tmp/aws
+   - cp -r aws/tmp/aws /tmp/aws
    - ansible-playbook delete-aws-cluster.yml
    - ansible-playbook delete-pre-requisite.yml
