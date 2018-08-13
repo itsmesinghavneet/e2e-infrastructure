@@ -143,7 +143,7 @@ apps-aws-deploy:
   image: atulabhi/kops:v8
   stage: app-test
   script: 
-   - echo "job aws success"
+   - echo "jobs-aws-started"
 
 cleanup-aws:
   image: atulabhi/kops:v8
