@@ -66,7 +66,7 @@ cleanup-gcp:
    - ls -a
    - mkdir ~/logs
    - mkdir ~/logs/clusters
-   - cp -r .kube/clusters ~/logs/clusters
+   - cp .kube/clusters ~/logs/clusters
    - git clone https://github.com/harshvkarn/litmus.git 
    - cd litmus/
    - git checkout gcp-k8s
@@ -147,5 +147,7 @@ cleanup-aws:
    - export AWS_DEFAULT_OUTPUT=json
    - mkdir /tmp/aws
    - cp -r aws/cluster /tmp/aws
+   - git clone https://github.com/chandankumar4/test.git
+   - cd test/k8s/aws/k8s-installer
    - ansible-playbook delete-aws-cluster.yml
    - ansible-playbook delete-pre-requisite.yml
