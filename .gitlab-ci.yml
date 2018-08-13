@@ -42,7 +42,7 @@ openebs_gcp_deploy:
   dependencies:
     - gcp-cluster
   script:
-    - echo "Deploying Openebs"
+    - echo "Deploying-Openebs"
     - ls -a
     - pwd
     - mkdir ~/.kube
@@ -68,7 +68,10 @@ cleanup-gcp:
     - gcp-cluster
   stage: cleanup
   script: 
+   - echo $SDK_TOKEN > key.json
+   - gcloud auth activate-service-account --key-file=key.json
    - gcloud config set project openebs-ci
+   - export GOOGLE_APPLICATION_CREDENTIALS="/itsmesingh.avneet/e2e-infrastructure/key.json"
    - echo "cleanup"
    - pwd 
    - ls -a
