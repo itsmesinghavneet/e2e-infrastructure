@@ -26,7 +26,7 @@ gcp-cluster:
     - wget https://raw.githubusercontent.com/openebs/litmus/master/hack/rbac.yaml
     - kubectl apply -f rbac.yaml
     - kubectl create configmap kubeconfig --from-file=/itsmesingh.avneet/e2e-infrastructure/.kube/config -n litmus 
-    - cp  ~/logs .kube
+    - cp -r ~/logs .kube
     - cd /itsmesingh.avneet/e2e-infrastructure/
     - ls -a
     - cd .kube
