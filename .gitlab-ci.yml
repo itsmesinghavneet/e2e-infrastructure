@@ -30,7 +30,7 @@ gcp-cluster:
     - cd /itsmesingh.avneet/e2e-infrastructure/
     - ls -a
     - cd .kube
-    - ls
+    - ls -a
     - cat clusters
   artifacts:
     paths:
