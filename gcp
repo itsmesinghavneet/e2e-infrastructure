@@ -1,0 +1,22 @@
+#!/bin/bash
+set -e
+
+echo $SDK_TOKEN > key.json
+gcloud auth activate-service-account --key-file=key.json
+gcloud config set project openebs-ci
+export GOOGLE_APPLICATION_CREDENTIALS="/itsmesingh.avneet/e2e-infrastructure/key.json"
+git clone https://github.com/harshvkarn/litmus.git
+cd litmus/
+git checkout gcp-k8s
+cd k8s/gcp/k8s-installer/
+echo "creating vpc"
+ansible-playbook create-vpc.yml --extra-vars "project=openebs-ci vpc_name=openebs-e2e-test"
+echo "creating cluster"
+ansible-playbook create-k8s-cluster.yml -vv --extra-vars "project=openebs-ci nodes=3 vpc_name=openebs-e2e-test k8s_version=1.10.6"
+mkdir /itsmesingh.avneet/e2e-infrastructure/.kube
+cat ~/.kube/config > /itsmesingh.avneet/e2e-infrastructure/.kube/config
+wget https://raw.githubusercontent.com/openebs/litmus/master/hack/rbac.yaml
+kubectl apply -f rbac.yaml
+kubectl create configmap kubeconfig --from-file=/itsmesingh.avneet/e2e-infrastructure/.kube/config -n litmus
+kubectl create configmap kubeconfig --from-file=/itsmesingh.avneet/e2e-infrastructure/.kube/config -n litmus
+
